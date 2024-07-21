@@ -9,6 +9,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -38,5 +41,16 @@ public class ProductService {
         product.update(productRequestDto);
 
         return new ProductResponseDto(product);
+    }
+
+    public List<ProductResponseDto> getProducts() {
+        List<Product> lists = productRepository.findAll();
+        List<ProductResponseDto> productResponseDtoList = new ArrayList<>();
+
+        for (Product product : lists) {
+            productResponseDtoList.add(new ProductResponseDto(product));
+        }
+
+        return productResponseDtoList;
     }
 }
